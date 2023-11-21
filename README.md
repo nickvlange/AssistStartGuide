@@ -1,48 +1,75 @@
-Start by downloading vmWare https://www.vmware.com/nl/products/workstation-player/workstation-player-evaluation.html
+markdown
 
-Open the premade virtual machine. 
-Password: magicleap10
+# Virtual Reality Robotics Setup Guide
 
-Some of the options of the virtual machine might have to be changed,
-make sure that network adapter is host only when connecting to unity, this option can be changed to nat while the vm is running if you require internet. 
+## Prerequisites
+1. Download and install [VMware Workstation Player](https://www.vmware.com/nl/products/workstation-player/workstation-player-evaluation.html).
+2. Open the premade virtual machine.
+   - **Virtual Machine Password:** magicleap10
+   - Ensure the network adapter is set to "Host Only" when connecting to Unity. Change to "NAT" if internet access is required.
 
-To start up the ros side open a terminal 
-go to the ws
+## ROS Setup
+1. Open a terminal and navigate to the workspace:
+   ```shell
+   cd catkin_ws
 
-```shell
-cd catkin_ws
-```
+    Configure network settings:
+        Confirm the network adapter is set to localhost.
+        Run the following command to find the IP address:
 
-first we have to make sure we can communicate through the local host, we might have to adjust the ip settings in unity.  Make sure that that the network adapter is set to localhost then, to find out what the right ip settings are run:
+        shell
 
-```shell
-ifconfig
-```
+    ifconfig
 
-You should get something like:
-![[Pasted image 20231110102449.png]]
-In this case the right ip is 192.168.247.128 Check if you can communicate to it by opening a terminal on your host machine and running
-```
-ping <your_ip>
-```
+    Identify the IP address (e.g., 192.168.247.128).
 
-Then in Unity set this ip at two places:
-in the robotics tab ROS settings ROS IP address
-and in the scene find the RosConnection object and set the ROS IP Addres
+Test communication:
 
-to start the tcp connection run:
-```shell
+    On the host machine, open a terminal and run:
+
+    shell
+
+    ping <your_ip>
+
+In Unity, set the IP address:
+
+    In the Robotics tab, under ROS Settings, set the ROS IP address.
+    In the scene, find the RosConnection object and set the ROS IP address.
+
+Start TCP connection in a terminal:
+
+shell
+
 source devel/setup.bash
 roslaunch ros_tcp_connection endpoint.launch
-```
-This also starts a roscore
 
-To start the haptic feedback controller run in a different shell:
-```shell
-source devel/setup.bash
-roslaunch omega_x haptic_feedback.launch
-```
+Start haptic feedback controller in a different shell:
 
-Open magic leap hub and connect the magic leap2 with the usb c cable to your pc, be sure that the device connects to your machine and not the vm. Start the application Simulator in magic leap hub. Due to the connection being made over the simulation the global dimming needs to be set in the device settings of the magic leap. 
+shell
 
-finally on the unity side play the scene. In the tcp connection terminal it should show that unity made connection, you should see the scene in unity. 
+    source devel/setup.bash
+    roslaunch omega_x haptic_feedback.launch
+
+Magic Leap Setup
+
+    Open Magic Leap Hub and connect the Magic Leap2 device to your PC using a USB-C cable.
+        Ensure the device connects to your machine, not the VM.
+
+    Start the Simulator application in Magic Leap Hub.
+
+    Set global dimming in Magic Leap device settings.
+
+Unity Setup
+
+    Play the scene in Unity.
+    In the TCP connection terminal, confirm Unity establishes a connection.
+    The Unity scene should display, confirming successful setup.
+
+Note: The provided IP address is an example; replace it with the actual IP obtained from ifconfig.
+
+This guide assumes a working knowledge of ROS, Unity, and Magic Leap development environments. For detailed troubleshooting, refer to respective documentation.
+
+csharp
+
+
+Copy and paste this content into your README.md file.
